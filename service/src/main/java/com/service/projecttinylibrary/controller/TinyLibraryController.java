@@ -26,8 +26,28 @@ public class TinyLibraryController {
         return tinyLibraryService.getTinyLibraryByName(name);
     }
 
-    @GetMapping(value = "/search", params = "nameContains")
-    public List<TinyLibraryDto> getTinyLibraryByNameThatContains(@RequestParam String nameContains) {
-        return tinyLibraryService.getTinyLibraryByNameThatContains(nameContains);
+    @GetMapping(value = "/search", params = "namehas")
+    public List<TinyLibraryDto> getTinyLibraryByNameThatHas(@RequestParam String namehas) {
+        return tinyLibraryService.getTinyLibraryByNameThatHas(namehas);
+    }
+
+    @GetMapping(value = "/search/book", params = "type")
+    public List<TinyLibraryDto> getTinyLibraryByBookType(@RequestParam String type) {
+        return tinyLibraryService.getTinyLibraryWithBookType(type);
+    }
+
+    @GetMapping(value = "/search/book", params = "title")
+    public List<TinyLibraryDto> getTinyLibraryByBookTitle(@RequestParam String title) {
+        return tinyLibraryService.getTinyLibraryWithBookName(title);
+    }
+
+    @GetMapping(value = "/search/book", params = "titlehas")
+    public List<TinyLibraryDto> getTinyLibraryByBookTitleThatHas(@RequestParam String titlehas) {
+        return tinyLibraryService.getTinyLibraryWithBookNameThatHas(titlehas);
+    }
+
+    @GetMapping(value = "/search/book", params = "summaryhas")
+    public List<TinyLibraryDto> getTinyLibraryByBookSummaryThatHas(@RequestParam String summaryhas) {
+        return tinyLibraryService.getTinyLibraryWithSummaryThatHas(summaryhas);
     }
 }

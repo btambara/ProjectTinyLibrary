@@ -9,5 +9,15 @@ import java.util.List;
 
 @Repository
 public interface TinyLibraryRepo extends MongoRepository<TinyLibrary, ObjectId> {
-    List<TinyLibrary> findByName(String name);
+    List<TinyLibrary> findByNameIgnoreCase(String name);
+
+    List<TinyLibrary> findByNameIgnoreCaseContains(String nameHas);
+
+    List<TinyLibrary> findByBooksTypeIgnoreCase(String type);
+
+    List<TinyLibrary> findByBooksTitleIgnoreCase(String title);
+
+    List<TinyLibrary> findByBooksTitleIgnoreCaseContains(String titleHas);
+
+    List<TinyLibrary> findByBooksSummaryIgnoreCaseContains(String summaryHas);
 }

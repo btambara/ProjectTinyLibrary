@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -41,27 +40,75 @@ public class TinyLibraryServiceImpl implements TinyLibraryService {
     }
 
     @Override
-    public List<TinyLibraryDto> getTinyLibraryByNameThatContains(String nameContains) {
-        logger.debug("nameContains: " + nameContains);
-        List<TinyLibraryDto> libraryByNameThatContainsList = tinyLibraryRepo.findAll().stream().
-                filter(tl -> tl.getName().toUpperCase().contains(nameContains.toUpperCase())).
+    public List<TinyLibraryDto> getTinyLibraryByNameThatHas(String nameHas) {
+        logger.debug("nameHas: " + nameHas);
+        List<TinyLibraryDto> libraryByNameThatHasList =  tinyLibraryRepo.findByNameIgnoreCaseContains(nameHas).
+                stream().
                 map(TinyLibraryConverter::entityToDto).
                 collect(Collectors.toList());
-        logger.debug("libraryByNameThatContainsList: " + libraryByNameThatContainsList);
+        logger.debug("libraryByNameThatHasList: " + libraryByNameThatHasList);
 
-        return libraryByNameThatContainsList;
+        return libraryByNameThatHasList;
     }
 
     @Override
     public List<TinyLibraryDto> getTinyLibraryByName(String name) {
         logger.debug("name: " + name);
-        List<TinyLibraryDto> libraryByNameList = tinyLibraryRepo.findByName(name).
+        List<TinyLibraryDto> libraryByNameList = tinyLibraryRepo.findByNameIgnoreCase(name).
                 stream().
                 map(TinyLibraryConverter::entityToDto).
                 collect(Collectors.toList());
         logger.debug("libraryByNameList: " + libraryByNameList);
 
         return libraryByNameList;
+    }
+
+    @Override
+    public List<TinyLibraryDto> getTinyLibraryWithBookType(String type) {
+        logger.debug("type: " + type);
+        List<TinyLibraryDto> libraryWithBookTypeList = tinyLibraryRepo.findByBooksTypeIgnoreCase(type).
+                stream().
+                map(TinyLibraryConverter::entityToDto).
+                collect(Collectors.toList());
+        logger.debug("libraryWithBookTypeList: " + libraryWithBookTypeList);
+
+        return libraryWithBookTypeList;
+    }
+
+    @Override
+    public List<TinyLibraryDto> getTinyLibraryWithBookName(String title) {
+        logger.debug("title: " + title);
+        List<TinyLibraryDto> libraryWithBookNameList = tinyLibraryRepo.findByBooksTitleIgnoreCase(title).
+                stream().
+                map(TinyLibraryConverter::entityToDto).
+                collect(Collectors.toList());
+        logger.debug("libraryWithBookNameList: " + libraryWithBookNameList);
+
+        return libraryWithBookNameList;
+    }
+
+    @Override
+    public List<TinyLibraryDto> getTinyLibraryWithBookNameThatHas(String titleHas) {
+        logger.debug("titleHas: " + titleHas);
+        List<TinyLibraryDto> libraryWithBookNameHasList = tinyLibraryRepo.findByBooksTitleIgnoreCaseContains(titleHas).
+                stream().
+                map(TinyLibraryConverter::entityToDto).
+                collect(Collectors.toList());
+        logger.debug("libraryWithBookNameHasList: " + libraryWithBookNameHasList);
+
+        return libraryWithBookNameHasList;
+    }
+
+    @Override
+    public List<TinyLibraryDto> getTinyLibraryWithSummaryThatHas(String summaryHas) {
+        logger.debug("summaryHas: " + summaryHas);
+        List<TinyLibraryDto> libraryWithBookSummaryHasList = tinyLibraryRepo.findByBooksSummaryIgnoreCaseContains(summaryHas).
+                stream().
+                map(TinyLibraryConverter::entityToDto).
+                collect(Collectors.toList());
+        logger.debug("libraryWithBookSummaryHasList: " + libraryWithBookSummaryHasList);
+
+        return libraryWithBookSummaryHasList;
     }
 
     @Override

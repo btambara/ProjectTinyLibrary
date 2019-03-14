@@ -11,7 +11,15 @@ public interface TinyLibraryService {
 
     List<TinyLibraryDto> getTinyLibraryByName(String name);
 
-    List<TinyLibraryDto> getTinyLibraryByNameThatContains(String nameContains);
+    List<TinyLibraryDto> getTinyLibraryByNameThatHas(String nameHas);
+
+    List<TinyLibraryDto> getTinyLibraryWithBookType(String type);
+
+    List<TinyLibraryDto> getTinyLibraryWithBookName(String title);
+
+    List<TinyLibraryDto> getTinyLibraryWithBookNameThatHas(String bookNameHas);
+
+    List<TinyLibraryDto> getTinyLibraryWithSummaryThatHas(String summaryHas);
 
     boolean addTinyLibrary(TinyLibraryDto tinyLibraryDto);
 
