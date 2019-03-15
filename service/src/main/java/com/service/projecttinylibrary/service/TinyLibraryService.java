@@ -1,6 +1,8 @@
 package com.service.projecttinylibrary.service;
 
+import com.service.projecttinylibrary.dto.BookDto;
 import com.service.projecttinylibrary.dto.TinyLibraryDto;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -13,6 +15,12 @@ public interface TinyLibraryService {
 
     List<TinyLibraryDto> getTinyLibraryByNameThatHas(String nameHas);
 
+    void addTinyLibrary(TinyLibraryDto tinyLibraryDto);
+
+    boolean updateTinyLibrary(TinyLibraryDto tinyLibraryDto);
+
+    boolean removeTinyLibrary(ObjectId tinyLibraryID);
+
     List<TinyLibraryDto> getTinyLibraryWithBookType(String type);
 
     List<TinyLibraryDto> getTinyLibraryWithBookName(String title);
@@ -21,9 +29,9 @@ public interface TinyLibraryService {
 
     List<TinyLibraryDto> getTinyLibraryWithSummaryThatHas(String summaryHas);
 
-    boolean addTinyLibrary(TinyLibraryDto tinyLibraryDto);
+    boolean addBookToTinyLibrary(BookDto bookDto, ObjectId tinyLibraryID);
 
-    boolean removeTinyLibrary(TinyLibraryDto tinyLibraryDto);
+    boolean removeBookToTinyLibrary(BookDto bookDto, ObjectId tinyLibraryID);
 
-    boolean updateTinyLibrary(TinyLibraryDto tinyLibraryDto);
+    boolean updateBookToTinyLibrary(BookDto bookDto, ObjectId tinyLibraryID);
 }
