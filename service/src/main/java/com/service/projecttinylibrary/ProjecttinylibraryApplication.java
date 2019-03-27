@@ -49,9 +49,9 @@ public class ProjectTinyLibraryApplication {
                         "Los Angeles 3",
                         new GeoJsonPoint(34.052235, -118.111111),
                         Arrays.asList(
-                                new BookDto("Horror", "Murder on Elf Street", "This is just a murder book"),
-                                new BookDto("Science Fiction", "Star Joys", "This is just a science fiction book"),
-                                new BookDto("Documentary", "Alburt Edisun", "This is just a Alburt Edisun book")
+                                new BookDto("Horror", "Joe", "Davis", 1, "Murder on Elf Street", "This is just a murder book"),
+                                new BookDto("Science Fiction", "George", "Bucas", 1, "Star Joys", "This is just a science fiction book"),
+                                new BookDto("Documentary", "Albert", "Edison", 1, "Alburt Edisun", "This is just a Alburt Edisun book")
                         )
                 )
         );
@@ -62,10 +62,10 @@ public class ProjectTinyLibraryApplication {
                         "Los Angeles 4",
                         new GeoJsonPoint(34.052235, -118.193683),
                         Arrays.asList(
-                                new BookDto("Horror", "Murder of Something", "This is just a murder book"),
-                                new BookDto("Comedy", "Laugh your Socks off", "This is just a comedy book"),
-                                new BookDto("Fiction", "Not true", "This is just a fiction book"),
-                                new BookDto("Documentary", "Elon Mask", "This is just a Elon Mask book")
+                                new BookDto("Horror", "Hog", "Willy", 1, "Murder of Something", "This is just a murder book"),
+                                new BookDto("Comedy", "Adam", "Sandal", 1, "Laugh your Socks off", "This is just a comedy book"),
+                                new BookDto("Fiction", "Notah", "Name", 1, "Not true", "This is just a fiction book"),
+                                new BookDto("Documentary", "Elon", "Musk", 1, "Elon Mask", "This is just a Elon Mask book")
                         )
                 )
         );
@@ -76,9 +76,9 @@ public class ProjectTinyLibraryApplication {
                         "Los Angeles 5",
                         new GeoJsonPoint(34.022235, -118.053683),
                         Arrays.asList(
-                                new BookDto("Self Help", "Shift Your Thinking", "This is just a self help book"),
-                                new BookDto("Science Fiction", "Star Trak", "This is just a star trak book"),
-                                new BookDto("Documentary", "Elon Mask", "This is just a Elon Mask book")
+                                new BookDto("Self Help", "You", "You", 1, "Shift Your Thinking", "This is just a self help book"),
+                                new BookDto("Science Fiction", "Darth", "Vader", 1, "Star Trak", "This is just a star trak book"),
+                                new BookDto("Documentary", "Elon", "Must", 1, "Elon Mask", "This is just a Elon Mask book")
                         )
                 )
         );

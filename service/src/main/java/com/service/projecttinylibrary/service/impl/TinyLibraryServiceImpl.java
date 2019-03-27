@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +31,19 @@ public class TinyLibraryServiceImpl implements TinyLibraryService {
     @Override
     public void wipeAllTinyLibraries() {
         tinyLibraryRepo.deleteAll();
+    }
+
+    @Override
+    public TinyLibraryDto getTinyLibrary(ObjectId tinyLibraryID) {
+        logger.debug("tinyLibraryID: " + tinyLibraryID);
+        Optional<TinyLibrary> tinyLibraryOptional = tinyLibraryRepo.findById(tinyLibraryID);
+        if (tinyLibraryOptional.isPresent()) {
+            logger.debug("Found: " + tinyLibraryID);
+            return TinyLibraryConverter.entityToDto(tinyLibraryOptional.get());
+        } else {
+            logger.debug("Not found: " + tinyLibraryID);
+            return null;
+        }
     }
 
     @Override
@@ -93,7 +107,7 @@ public class TinyLibraryServiceImpl implements TinyLibraryService {
     @Override
     public boolean updateTinyLibrary(TinyLibraryDto tinyLibraryDto) {
         logger.debug("tinyLibraryDto: " + tinyLibraryDto);
-        Optional<TinyLibrary> tinyLibraryOptional = tinyLibraryRepo.findById(tinyLibraryDto.getId());
+        Optional<TinyLibrary> tinyLibraryOptional = tinyLibraryRepo.findById(new ObjectId(tinyLibraryDto.getObjectIDHexString()));
         if (tinyLibraryOptional.isPresent()) {
             tinyLibraryRepo.save(tinyLibraryOptional.get());
             logger.debug("[SUCCESS-UPDATE] tinyLibraryDto: " + tinyLibraryDto);
@@ -200,16 +214,14 @@ public class TinyLibraryServiceImpl implements TinyLibraryService {
                 Optional<Book> bookOptional = tinyLibrary.getBooks().stream().filter(b -> b.getTitle().equalsIgnoreCase(bookDto.getTitle())).findFirst();
                 if (bookOptional.isPresent()) {
                     Book currentBook = bookOptional.get();
-                    int currentBookQuantity = currentBook.getQuantity();
                     int currentBookIndex = tinyLibrary.getBooks().indexOf(currentBook);
-                    int newBookQuantity = currentBookQuantity - bookDto.getQuantity();
-                    if (newBookQuantity >= 0) {
-                        if (newBookQuantity != 0) {
-                            tinyLibrary.getBooks().get(currentBookIndex).setQuantity(currentBookQuantity - bookDto.getQuantity());
-                            logger.debug("[UPDATED-BOOK-QUANTITY] " + bookDto);
-                        } else {
+                    if (currentBookIndex != -1) {
+                        if (currentBookIndex != 0) {
                             tinyLibrary.getBooks().remove(currentBookIndex);
                             logger.debug("[REMOVED-BOOK] " + bookDto);
+                        } else {
+                            logger.debug("[FAILED-removeBookToTinyLibrary] " + bookDto);
+                            return false;
                         }
                         tinyLibraryRepo.save(tinyLibrary);
                         logger.debug("[SUCCESS-removeBookToTinyLibrary] " + bookDto);
@@ -244,10 +256,8 @@ public class TinyLibraryServiceImpl implements TinyLibraryService {
                     if (bookDto.getQuantity() >= 0) {
                         tinyLibrary.getBooks().remove(currentBookIndex);
                         logger.debug("[REMOVED-BOOK] " + bookDto);
-                        if (bookDto.getQuantity() != 0) {
-                            logger.debug("[UPDATED-BOOK] " + bookDto);
-                            tinyLibrary.getBooks().add(BookConverter.dtoToEntity(bookDto));
-                        }
+                        tinyLibrary.getBooks().add(BookConverter.dtoToEntity(bookDto));
+                        logger.debug("[UPDATED-BOOK] " + bookDto);
                         tinyLibraryRepo.save(tinyLibrary);
                         logger.debug("[SUCCESS-updateBookToTinyLibrary] " + bookDto);
                         return true;
@@ -257,6 +267,27 @@ public class TinyLibraryServiceImpl implements TinyLibraryService {
         }
 
         logger.debug("[FAILED-updateBookToTinyLibrary] " + bookDto);
+        return false;
+    }
+
+    @Override
+    public boolean updateBooksToTinyLibrary(BookDto[] bookDto, ObjectId tinyLibraryID) {
+        logger.debug("bookDto: " + bookDto + "id: " + tinyLibraryID);
+        Optional<TinyLibrary> tinyLibraryOptional = tinyLibraryRepo.findById(tinyLibraryID);
+        if (tinyLibraryOptional.isPresent()) {
+            TinyLibrary tinyLibrary = tinyLibraryOptional.get();
+            tinyLibrary.getBooks().clear();
+            tinyLibrary.getBooks().addAll(
+                    Arrays.asList(bookDto)
+                            .stream()
+                            .map(BookConverter::dtoToEntity)
+                            .collect(Collectors.toList()));
+            tinyLibraryRepo.save(tinyLibrary);
+            logger.debug("[SUCCESS-updateBooksToTinyLibrary] " + bookDto);
+            return true;
+        }
+
+        logger.debug("[FAILED-updateBooksToTinyLibrary] " + bookDto);
         return false;
     }
 }

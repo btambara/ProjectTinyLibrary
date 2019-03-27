@@ -10,10 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/library")
 public class TinyLibraryController {
     @Autowired
     private TinyLibraryService tinyLibraryService;
+
+    @GetMapping
+    public TinyLibraryDto getTinyLibrary(@RequestParam String id) {
+        return tinyLibraryService.getTinyLibrary(new ObjectId(id));
+    }
 
     @GetMapping("/nearby")
     public List<TinyLibraryDto> getNearbyTinyLibrary(@RequestParam Double lat, @RequestParam Double lng, @RequestParam Double maxDistance, @RequestParam String unit) {
@@ -65,17 +71,23 @@ public class TinyLibraryController {
         return tinyLibraryService.getTinyLibraryWithSummaryThatHas(summaryhas);
     }
 
-    @PostMapping(value = "book", params = "id")
+    @PostMapping(value = "/book", params = "id")
     public void addBookToTinyLibrary(@RequestBody BookDto bookDto, @RequestParam String id) {
         tinyLibraryService.addBookToTinyLibrary(bookDto, new ObjectId(id));
     }
 
-    @PutMapping(value = "book", params = "id")
+    @PutMapping(value = "/book", params = "id")
     public void updateBookInTinyLibrary(@RequestBody BookDto bookDto, @RequestParam String id) {
         tinyLibraryService.updateBookToTinyLibrary(bookDto, new ObjectId(id));
     }
 
-    @DeleteMapping(value = "book", params = "id")
+    @PutMapping(value = "/books", params = "id")
+    public void updateBooksInTinyLibrary(@RequestBody BookDto[] booksDto, @RequestParam String id) {
+        tinyLibraryService.updateBooksToTinyLibrary(booksDto, new ObjectId(id));
+    }
+
+
+    @DeleteMapping(value = "/book", params = "id")
     public void removeBookInTinyLibrary(@RequestBody BookDto bookDto, @RequestParam String id) {
         tinyLibraryService.removeBookToTinyLibrary(bookDto, new ObjectId(id));
     }

@@ -9,6 +9,8 @@ import java.util.List;
 public interface TinyLibraryService {
     void wipeAllTinyLibraries();
 
+    TinyLibraryDto getTinyLibrary(ObjectId tinyLibraryID);
+
     List<TinyLibraryDto> getNearbyTinyLibrary(Double lat, Double lng, Double maxDistance, String unit);
 
     List<TinyLibraryDto> getTinyLibraryByName(String name);
@@ -34,4 +36,6 @@ public interface TinyLibraryService {
     boolean removeBookToTinyLibrary(BookDto bookDto, ObjectId tinyLibraryID);
 
     boolean updateBookToTinyLibrary(BookDto bookDto, ObjectId tinyLibraryID);
+
+    boolean updateBooksToTinyLibrary(BookDto[] bookDto, ObjectId tinyLibraryID);
 }
