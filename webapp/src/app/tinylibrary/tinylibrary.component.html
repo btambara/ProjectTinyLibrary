@@ -1,0 +1,66 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div class="information">
+    <mat-card>
+      <mat-card-title *ngIf="tinyLib">{{tinyLib.name}}</mat-card-title>
+      <mat-card-subtitle *ngIf="tinyLib && tinyLib.location"><b>Address (Latitude/Longitude):
+      </b>{{tinyLib.location.coordinates}}
+      </mat-card-subtitle>
+      <button mat-raised-button color="accent" (click)="onEditLibraryDialog()">Edit Library</button>
+      <button mat-raised-button color="warn" (click)="delete(tinyLib.objectIDHexString)">Delete Library</button>
+    </mat-card>
+  </div>
+
+  <div class="books">
+    <mat-card>
+      <mat-card-title *ngIf="tinyLib">Books</mat-card-title>
+      <mat-card-subtitle *ngIf="tinyLib && tinyLib.books">Books Available: {{tinyLib.books.length}}</mat-card-subtitle>
+      <button mat-raised-button color="primary" (click)="onCheckInDialog(tinyLib)">Check In Book</button>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search library">
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource">
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Quantity</th>
+            <td mat-cell *matCellDef="let element"> {{element.quantity}}</td>
+          </ng-container>
+
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Title</th>
+            <td mat-cell *matCellDef="let element"> {{element.title}}</td>
+          </ng-container>
+
+          <!-- Author Column -->
+          <ng-container matColumnDef="author">
+            <th mat-header-cell *matHeaderCellDef> Author</th>
+            <td mat-cell *matCellDef="let element"> {{element.authorFirstName}} {{element.authorLastName}}</td>
+          </ng-container>
+
+          <!-- Summary Column -->
+          <ng-container matColumnDef="summary">
+            <th mat-header-cell *matHeaderCellDef> Summary</th>
+            <td mat-cell *matCellDef="let element"> {{element.summary}}</td>
+          </ng-container>
+
+          <!-- Checkout Column -->
+          <ng-container matColumnDef="checkout">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-raised-button color="primary"
+                      [disabled]="isCheckOutDisabled(element)" (click)="onCheckOut(element, tinyLib.objectIDHexString)">
+                Check
+                Out
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

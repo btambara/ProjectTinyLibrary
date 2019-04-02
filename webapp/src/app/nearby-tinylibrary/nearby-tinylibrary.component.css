@@ -1,0 +1,31 @@
+.cardlist {
+    float: left;
+    width: 25%;
+    margin-right: 10px;
+}
+
+.cardmap {
+    float: right;
+    width: 100%;
+}
+
+agm-map {
+    height: 100vh;
+}
+
+cdk-virtual-scroll-viewport {
+    height: 80vh;
+}
+
+mat-list-item {
+    text-align: left;
+    cursor: pointer;
+}
+
+mat-list-item:hover, mat-list-item:active {
+    background-color: rgba(123, 31, 162, 0.3);
+}
+
+mat-slider {
+    width: 90%;
+}

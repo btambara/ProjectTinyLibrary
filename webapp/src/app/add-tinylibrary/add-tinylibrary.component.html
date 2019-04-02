@@ -1,0 +1,59 @@
+<div class="addtinylibrary">
+  <div class="information">
+    <mat-card>
+      <mat-card-title>Add Tiny Library</mat-card-title>
+      <form [formGroup]="form" (ngSubmit)="submit(form)">
+        <mat-form-field>
+          <input type="text" matInput formControlName="name" placeholder="Add Name" require/>
+        </mat-form-field>
+        <div>
+          <mat-form-field>
+            <input type="text" matInput formControlName="latitude" placeholder="Add Latitude" require/>
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput formControlName="longtitude" placeholder="Add Longtitude" require/>
+          </mat-form-field>
+        </div>
+
+        <mat-card-title>Books</mat-card-title>
+        <button mat-raised-button color="primary" type="button" (click)="addBook()">Add Book</button>
+        <table mat-table [dataSource]='dataSource'>
+          <!-- Quantity Column -->
+          <ng-container matColumnDef='quantity'>
+            <th mat-header-cell *matHeaderCellDef> Quantity</th>
+            <td mat-cell *matCellDef="let book"> {{book.quantity}}</td>
+          </ng-container>
+
+          <!-- Title Column -->
+          <ng-container matColumnDef='title'>
+            <th mat-header-cell *matHeaderCellDef> Title</th>
+            <td mat-cell *matCellDef="let book"> {{book.title}}</td>
+          </ng-container>
+
+          <!-- Author Column -->
+          <ng-container matColumnDef='author'>
+            <th mat-header-cell *matHeaderCellDef> Author</th>
+            <td mat-cell *matCellDef="let book"> {{book.authorFirstName}} {{book.authorLastName}}</td>
+          </ng-container>
+
+          <!-- Check in Column -->
+          <ng-container matColumnDef='checkin'>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let book">
+              <button mat-raised-button type="button" color="accent" (click)="editBook(book)">Edit</button>
+              <button mat-raised-button type="button" color="warn" (click)="removeBook(book)">Remove</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </form>
+      <div class="save">
+        <button mat-raised-button [disabled]="!form.valid" color="primary" type="submit" (click)="addTinyLibrary(form)">
+          Add
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</div>

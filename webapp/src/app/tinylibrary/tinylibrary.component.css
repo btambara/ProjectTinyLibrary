@@ -1,0 +1,34 @@
+cdk-virtual-scroll-viewport {
+    height: 100em;
+    max-height: inherit;
+}
+
+mat-list-item {
+    text-align: left;
+}
+
+mat-card {
+    margin: auto;
+}
+
+.books {
+    width: 90%;
+}
+
+.information {
+    width: 90%;
+    padding-bottom: 10px;
+}
+
+mat-form-field {
+    width: 50%;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+}
+
+button {
+    margin-right: 10px;
+}

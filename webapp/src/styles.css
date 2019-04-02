@@ -1,0 +1,5 @@
+@import "~@angular/material/prebuilt-themes/purple-green.css";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+body{
+    background-color: lightgrey;
+}

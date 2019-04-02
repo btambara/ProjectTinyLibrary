@@ -1,0 +1,36 @@
+<div fxLayout="row">
+  <mat-card class="cardlist">
+    <h5>Max Distance:
+      <mat-slider (input)="onMaxDistanceChange($event)" thumbLabel tickInterval="10" min="1" max="100" value="10">
+      </mat-slider>
+    </h5>
+    <mat-card-title>Nearby Tiny Libraries</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <cdk-virtual-scroll-viewport itemSize="2">
+          <mat-list-item [routerLink]="['/library/',tinylibrary.objectIDHexString]" (click)="onRowClicked(tinylibrary)"
+                         *cdkVirtualFor="let tinylibrary of nearByTinyLibrary">
+            <div matLine>
+              <h3>{{tinylibrary.name}}</h3>
+            </div>
+            <div matLine><b>Address (Latitude/Longitude):</b></div>
+            <div matLine>{{tinylibrary.location.coordinates}}</div>
+            <div matLine><b>Books Available: </b>{{tinylibrary.books.length}}</div>
+            <mat-divider matLine></mat-divider>
+          </mat-list-item>
+        </cdk-virtual-scroll-viewport>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="cardmap">
+    <mat-card-content>
+      <agm-map [latitude]='latitude' [longitude]='longitude' [zoom]='zoom'>
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+        <agm-marker *ngFor="let tinylibrary of nearByTinyLibrary"
+                    [latitude]="tinylibrary.location.coordinates[0]" [longitude]="tinylibrary.location.coordinates[1]">
+        </agm-marker>
+      </agm-map>
+    </mat-card-content>
+  </mat-card>
+</div>
