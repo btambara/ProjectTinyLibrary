@@ -109,7 +109,7 @@ public class TinyLibraryServiceImpl implements TinyLibraryService {
         logger.debug("tinyLibraryDto: " + tinyLibraryDto);
         Optional<TinyLibrary> tinyLibraryOptional = tinyLibraryRepo.findById(new ObjectId(tinyLibraryDto.getObjectIDHexString()));
         if (tinyLibraryOptional.isPresent()) {
-            tinyLibraryRepo.save(tinyLibraryOptional.get());
+            tinyLibraryRepo.save(TinyLibraryConverter.dtoToEntity(tinyLibraryDto));
             logger.debug("[SUCCESS-UPDATE] tinyLibraryDto: " + tinyLibraryDto);
             return true;
         }

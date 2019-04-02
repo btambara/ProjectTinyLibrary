@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class TinyLibraryConverter {
     public static TinyLibrary dtoToEntity(TinyLibraryDto tinyLibraryDto) {
         return new TinyLibrary(
-                new ObjectId(tinyLibraryDto.getObjectIDHexString() == null ? ObjectId.get().toHexString() : tinyLibraryDto.getObjectIDHexString()),
+                new ObjectId(tinyLibraryDto.getObjectIDHexString() == null || tinyLibraryDto.getObjectIDHexString().isEmpty() ? ObjectId.get().toHexString() : tinyLibraryDto.getObjectIDHexString()),
                 tinyLibraryDto.getName(),
                 tinyLibraryDto.getLocation(),
                 tinyLibraryDto.getBooks().stream().map(BookConverter::dtoToEntity).collect(Collectors.toList()));
